@@ -29,6 +29,15 @@ sudo -E chown workbench:workbench /data
 sudo -E curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo -E bash
 sudo -E apt-get install git-lfs
 
+
+# Install Java OpenJDK 11
+sudo apt-get install -y openjdk-11-jdk
+
+sudo -E wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+echo 'deb https://debian.neo4j.com stable 5' | sudo tee /etc/apt/sources.list.d/neo4j.list
+sudo -E apt-get update
+sudo -E apt-get install --fix-missing -y neo4j
+
 cat <<EOM | sudo tee /etc/profile.d/docker-in-docker.sh > /dev/null
 if ! groups workbench | grep docker > /dev/null; then
     docker_gid=\$(stat -c %g /var/host-run/docker.sock)
